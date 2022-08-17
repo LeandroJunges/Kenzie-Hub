@@ -6,8 +6,10 @@ import HeaderRegister from "../../Components/HeaderRegister";
 import { toast } from "react-toastify";
 import { Form } from "./styles";
 import { Container } from "../../Components/ContainerForm/styles";
+import { useNavigate } from "react-router-dom";
 
 function Register() {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -23,6 +25,8 @@ function Register() {
       .then((res) => {
         console.log(res);
         toast.success("Conta criada com sucesso");
+        setTimeout(3000);
+        navigate("/");
       })
 
       .catch((err) => {

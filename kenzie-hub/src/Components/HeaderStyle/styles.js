@@ -32,10 +32,10 @@ export const HeaderLogin = styled.div`
 `;
 
 export const HeaderDash = styled.div`
-  width: 60%;
+  width: 80%;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  margin: 0;
 
   h1 {
     color: #ff577f;

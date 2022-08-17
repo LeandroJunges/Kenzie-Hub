@@ -1,5 +1,4 @@
-import { useEffect } from "react";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import api from "../Service/api";
@@ -8,6 +7,7 @@ export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -17,33 +17,38 @@ const AuthProvider = ({ children }) => {
         try {
           api.defaults.headers.authorization = `Bearer ${token}`;
           const { data } = await api.get("/profile");
-          console.log(data);
           setUser(data);
         } catch (error) {
-          toast.error("Ops! Tem algo errado!");
+          localStorage.clear();
           console.error(error);
+          toast.error("Ops! Tem algo errado!");
         }
       }
+      setLoading(false);
     }
     loadUser();
   }, []);
+
   const signIn = async (data) => {
-    console.log(data);
-    const response = await api.post("/sessions", data);
-    toast.success("Login Efetuado!");
+    try {
+      const response = await api.post("/sessions", data);
+      toast.success("Login Efetuado!");
 
-    const { user: userResponse, token } = response.data;
-    setUser(userResponse);
+      const { user: userResponse, token } = response.data;
 
-    api.defaults.headers.authorization = `Bearer ${token}`;
+      api.defaults.headers.authorization = `Bearer ${token}`;
+      setUser(userResponse);
 
-    localStorage.setItem("@TOKEN", token);
-    localStorage.setItem("@NAME", user.name);
-    localStorage.setItem("@MODULE", user.course_module);
-    navigate("/dashboard", { replace: true });
+      localStorage.setItem("@TOKEN", token);
+      localStorage.setItem("@USERID", user.id);
+      navigate("/dashboard", { replace: true });
+    } catch (error) {
+      toast.error("Ops! Tem algo errado! Verifique seu e-mail e senha !");
+      console.error(error);
+    }
   };
   return (
-    <AuthContext.Provider value={{ user, signIn }}>
+    <AuthContext.Provider value={{ user, signIn, loading }}>
       {children}
     </AuthContext.Provider>
   );

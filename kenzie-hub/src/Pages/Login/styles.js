@@ -3,11 +3,12 @@ import styled from "styled-components";
 export const FormLogin = styled.form`
   display: flex;
   flex-direction: column;
+  gap: 8px;
 
   label {
     font-size: 16px;
     text-align: start;
-    margin-left: 10px;
+    margin-left: 20px;
     margin-bottom: 8px;
     margin-top: 0;
   }
