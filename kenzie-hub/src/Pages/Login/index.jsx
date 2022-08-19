@@ -25,28 +25,28 @@ function Login() {
         <h1>Kenzie Hub</h1>
       </HeaderLogin>
       <Container>
-        <h2>Login</h2>
+        <h2 className="titleForm">Login</h2>
         <FormLogin onSubmit={handleSubmit(signIn)}>
-          <label htmlFor="lEmail">Email</label>
+          <label htmlFor="lEmail">E-mail:</label>
           <input
             type="email"
             id="lEmail"
-            placeholder="e-mail"
+            placeholder="Digite seu e-mail"
             {...register("email")}
           />
-          <span>{errors.email?.message}</span>
-          <label htmlFor="lPassword">Senha</label>
+          <p>{errors.email?.message}</p>
+          <label htmlFor="lPassword">Senha:</label>
           <input
             type="password"
             id="lPassword"
-            placeholder="senha"
+            placeholder="Digite sua senha"
             {...register("password")}
           />
-          <span>{errors.password?.message}</span>
+          <p>{errors.password?.message}</p>
 
           <button type="submit">Entrar</button>
 
-          <p>ainda não possui conta ?</p>
+          <span>Ainda não possui conta ?</span>
 
           <Link to={"/register"}>Cadastre-se</Link>
         </FormLogin>

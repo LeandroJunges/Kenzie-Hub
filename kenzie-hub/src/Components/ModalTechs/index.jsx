@@ -39,8 +39,8 @@ function ModalTechs({ closeModal }) {
 
           <select id="cSelection" {...register("status")}>
             <option value="Iniciante">Iniciante</option>
-            <option value="Intermediario">Intermediário</option>
-            <option value="Avancado">Avançado</option>
+            <option value="Intermediário">Intermediário</option>
+            <option value="Avançado">Avançado</option>
           </select>
           <span> {errors.status?.message} </span>
           <button type="submit">Cadastrar Tecnologia</button>

@@ -1,14 +1,17 @@
 import styled from "styled-components";
 
 export const ContainerDashboard = styled.div`
-  width: 80%;
-
+  width: 100%;
+  height: 110px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
+  border-top: 1px solid #c0c0c024;
+  border-bottom: 0.5px solid #c0c0c024;
 
-  h1 {
-    font-size: 26px;
+  h2 {
+    font-size: 22px;
+    font-family: Inter;
   }
   span {
     font-size: 20px;
@@ -16,50 +19,74 @@ export const ContainerDashboard = styled.div`
 `;
 
 export const ContainerContent = styled.div`
-  width: 80%;
-  height: 30px;
+  width: 100%;
+  height: 60px;
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 50px;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 10px;
 
   button {
+    width: 32.49px;
+    height: 32px;
     font-size: 20px;
-    background-color: transparent;
+    background-color: #212529;
     color: #fff;
     border: none;
     cursor: pointer;
   }
 `;
-// const translateXAnimationFrom = keyframes`
-//   0% {
-//     background: transparent;
-//     transform: translateX(120%);
-//   }
-//   95% {
-//     transform: translateX(-20px);
-//   }
-//   100% {
-//     transform: translateX(0);
-//   }
-// `;
 
 export const ContainerList = styled.ul`
-  min-width: 80%;
-  height: 50vh;
+  min-width: 780px;
+  height: 470px;
   display: flex;
   flex-direction: column;
   list-style: none;
   gap: 20px;
+  border-radius: 4px;
   overflow: auto;
+  background-color: #212529;
 
   li {
     display: flex;
-    width: 95%;
-    justify-content: space-between;
+    width: 732px;
+    height: 40px;
     box-shadow: 0px 6px 20px 0px #80808070;
-    gap: 10px;
+    gap: 6px;
+    align-items: center;
+    justify-content: center;
+    margin-right: 40px;
+    background-color: #121214;
 
-    /* margin-top: 20px; */
+    animation: {
+      -webkit-animation-name: zoomIn;
+      animation-name: zoomIn;
+      -webkit-animation-duration: 1s;
+      animation-duration: 1s;
+      -webkit-animation-fill-mode: both;
+      animation-fill-mode: both;
+    }
+    @-webkit-keyframes zoomIn {
+      0% {
+        opacity: 0;
+        -webkit-transform: scale3d(0.3, 0.3, 0.3);
+        transform: scale3d(0.3, 0.3, 0.3);
+      }
+      50% {
+        opacity: 1;
+      }
+    }
+    @keyframes zoomIn {
+      0% {
+        opacity: 0;
+        -webkit-transform: scale3d(0.3, 0.3, 0.3);
+        transform: scale3d(0.3, 0.3, 0.3);
+      }
+      50% {
+        opacity: 1;
+      }
+    }
   }
   .containerTech {
     display: flex;
@@ -68,11 +95,31 @@ export const ContainerList = styled.ul`
     align-items: center;
     margin-left: 8px;
   }
+  p {
+    font-weight: 700;
+    font-size: 14.21px;
+    line-height: 22px;
+    color: #ffffff;
+  }
+  span {
+    font-weight: 400;
+    font-size: 12.182px;
+    line-height: 22px;
+    color: #868e96;
+  }
   .btnTrash {
+    width: 20px;
+    height: 20px;
     background-color: transparent;
     border: none;
     color: #fff;
-    margin-left: 25px;
+    margin-right: 15px;
+    margin-left: 20px;
     cursor: pointer;
+
+    svg {
+      width: 13.17px;
+      height: 12px;
+    }
   }
 `;

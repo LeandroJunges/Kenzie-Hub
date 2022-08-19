@@ -1,15 +1,13 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { formSchema } from "../../validators/registerUser";
-import api from "../../Service/api";
 import HeaderRegister from "../../Components/HeaderRegister";
-import { toast } from "react-toastify";
 import { Form } from "./styles";
 import { Container } from "../../Components/ContainerForm/styles";
-import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { RegisterContext } from "../../contexts/RegisterContext";
 
 function Register() {
-  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -17,23 +15,7 @@ function Register() {
   } = useForm({
     resolver: yupResolver(formSchema),
   });
-
-  const onSubmitFunction = (data) => {
-    console.log(data);
-    api
-      .post("/users", data)
-      .then((res) => {
-        console.log(res);
-        toast.success("Conta criada com sucesso");
-        setTimeout(3000);
-        navigate("/");
-      })
-
-      .catch((err) => {
-        toast.error("Ops! Tem algo errado!");
-        console.log(err);
-      });
-  };
+  const { onSubmitFunction } = useContext(RegisterContext);
 
   return (
     <>
@@ -46,7 +28,7 @@ function Register() {
           <input
             type="text"
             id="cName"
-            placeholder="Nome"
+            placeholder="Digite aqui seu nome"
             {...register("name")}
           />
           <p>{errors.name?.message} </p>
@@ -55,7 +37,7 @@ function Register() {
           <input
             type="email"
             id="cEmail"
-            placeholder="Email"
+            placeholder="Digite aqui seu e-mail"
             {...register("email")}
           />
           <p>{errors.email?.message}</p>
@@ -64,7 +46,7 @@ function Register() {
           <input
             type="password"
             id="cSenha"
-            placeholder="Senha"
+            placeholder="Digite aqui sua senha"
             {...register("password")}
           />
           <p>{errors.password?.message} </p>
@@ -73,7 +55,7 @@ function Register() {
           <input
             type="password"
             id="cConfirmSenha"
-            placeholder="Confirmar senha"
+            placeholder="Digite novamente sua senha"
             {...register("confirmPass")}
           />
           <p>{errors.confirmPass?.message} </p>
@@ -82,7 +64,7 @@ function Register() {
           <input
             type="text"
             id="cBio"
-            placeholder="Descrição"
+            placeholder="Fale sobre você"
             {...register("bio")}
           />
           <p>{errors.bio?.message} </p>
@@ -91,7 +73,7 @@ function Register() {
           <input
             type="text"
             id="cContact"
-            placeholder="Contato"
+            placeholder="Opção de contato Ex.linkedIn, Facebook, tel..."
             {...register("contact")}
           />
           <p>{errors.contact?.message} </p>

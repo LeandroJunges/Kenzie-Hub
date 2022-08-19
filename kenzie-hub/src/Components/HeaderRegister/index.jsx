@@ -10,7 +10,7 @@ function HeaderRegister() {
   return (
     <Header>
       <h1>Kenzie Hub</h1>
-      <button onClick={back}>voltar</button>
+      <button onClick={back}>Voltar</button>
     </Header>
   );
 }

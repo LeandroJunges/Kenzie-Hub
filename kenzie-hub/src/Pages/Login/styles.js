@@ -27,6 +27,9 @@ export const FormLogin = styled.form`
     border-radius: 4px;
     background-color: #ff577f;
     margin: 10px auto 20px auto;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 26px;
     color: #fff;
     border: none;
     cursor: pointer;
@@ -41,7 +44,10 @@ export const FormLogin = styled.form`
     width: 306px;
     margin: 20px auto;
     border-radius: 5px;
-    color: #fff;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 26px;
+    color: #f8f9fa;
     font-size: 20px;
     cursor: pointer;
   }

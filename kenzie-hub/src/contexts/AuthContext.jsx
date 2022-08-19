@@ -36,11 +36,10 @@ const AuthProvider = ({ children }) => {
 
       const { user: userResponse, token } = response.data;
 
-      api.defaults.headers.authorization = `Bearer ${token}`;
       setUser(userResponse);
-
+      localStorage.setItem("@USERID", userResponse.id);
       localStorage.setItem("@TOKEN", token);
-      localStorage.setItem("@USERID", user.id);
+
       navigate("/dashboard", { replace: true });
     } catch (error) {
       toast.error("Ops! Tem algo errado! Verifique seu e-mail e senha !");

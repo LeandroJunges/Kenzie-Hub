@@ -25,7 +25,7 @@ const TechProvider = ({ children }) => {
       .then((response) => {
         setTechs(response.data.techs);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.error(err));
   }
 
   const removeTech = async (id) => {
@@ -38,7 +38,6 @@ const TechProvider = ({ children }) => {
 
         const person = localStorage.getItem("@USERID");
         showTechs(person);
-        console.log(techs);
       } catch (error) {
         console.error("Ops aconteceu esse problema", error);
       }
