@@ -32,7 +32,11 @@ const TechProvider = ({ children }) => {
     const token = localStorage.getItem("@TOKEN");
     if (token) {
       try {
-        await api.delete(`/users/techs/${id}`);
+        await api.delete(`/users/techs/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
         toast.success("Tecnologia Deletada!");
 
@@ -44,8 +48,13 @@ const TechProvider = ({ children }) => {
     }
   };
   const addTech = async (data) => {
+    const token = localStorage.getItem("@TOKEN");
     try {
-      await api.post("/users/techs", data);
+      await api.post("/users/techs", data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       toast.success("Tecnologia adicionada!");
 
