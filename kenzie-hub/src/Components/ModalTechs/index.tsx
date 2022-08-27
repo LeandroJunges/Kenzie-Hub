@@ -4,14 +4,18 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schemaModal } from "../../validators/modalAddTech";
 import { useContext } from "react";
-import { TechContex } from "../../contexts/TechContext";
+import { ITechsData, TechContex } from "../../contexts/TechContext";
 
-function ModalTechs({ closeModal }) {
+interface IcloseModalProps {
+  closeModal: () => void;
+}
+
+function ModalTechs({ closeModal }: IcloseModalProps) {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<ITechsData>({
     resolver: yupResolver(schemaModal),
   });
   const { addTech } = useContext(TechContex);

@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { schemaLogin } from "../../validators/loginUser";
 import { useContext } from "react";
-import { AuthContext } from "../../contexts/AuthContext";
+import { AuthContext, ILoginData } from "../../contexts/AuthContext";
 import { Container } from "../../Components/ContainerForm/styles";
 import { FormLogin } from "./styles";
 import { HeaderLogin } from "../../Components/HeaderStyle/styles";
@@ -13,7 +13,7 @@ function Login() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<ILoginData>({
     resolver: yupResolver(schemaLogin),
   });
 
