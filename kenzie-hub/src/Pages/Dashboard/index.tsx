@@ -1,5 +1,4 @@
 import { useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import HeaderDashboard from "../../Components/HeaderDashboard";
 import ModalTechs from "../../Components/ModalTechs";
 import { AuthContext } from "../../contexts/AuthContext";
@@ -11,22 +10,16 @@ function Dashboard() {
   const { user } = useContext(AuthContext);
   const { removeTech, techs, showTechs, isOpenModal, openModal, closeModal } =
     useContext(TechContex);
-  const navigate = useNavigate();
-
-  function logout() {
-    localStorage.clear();
-    navigate("/");
-  }
 
   useEffect(() => {
-    const person = localStorage.getItem("@USERID");
+    const person = JSON.parse(localStorage.getItem("@USERID") || "{}");
     showTechs(person);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <>
-      <HeaderDashboard logout={logout} />
+      <HeaderDashboard />
       <ContainerDashboard>
         <h2>Olá {user.name} ! </h2>
         <span>{user.course_module}</span>

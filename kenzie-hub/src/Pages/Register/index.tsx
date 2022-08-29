@@ -5,17 +5,22 @@ import HeaderRegister from "../../Components/HeaderRegister";
 import { Form } from "./styles";
 import { Container } from "../../Components/ContainerForm/styles";
 import { useContext } from "react";
-import { RegisterContext } from "../../contexts/RegisterContext";
+import {
+  IRegisterProviderProps,
+  ISubmitData,
+  RegisterContext,
+} from "../../contexts/RegisterContext";
 
 function Register() {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<ISubmitData>({
     resolver: yupResolver(formSchema),
   });
-  const { onSubmitFunction } = useContext(RegisterContext);
+  const { onSubmitFunction } =
+    useContext<IRegisterProviderProps>(RegisterContext);
 
   return (
     <>
@@ -94,7 +99,7 @@ function Register() {
               Quarto módulo (Backend Avançado)
             </option>
           </select>
-          <p>{errors.choseModule?.message} </p>
+          <p>{errors.course_module?.message} </p>
 
           <button type="submit">Cadastrar</button>
         </Form>

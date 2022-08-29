@@ -1,13 +1,36 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, ReactNode, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import api from "../Service/api";
 
-export const AuthContext = createContext();
+export interface IAuthProviderProps {
+  user: IUserProps;
+  loading: boolean;
+  signIn: (data: ILoginData) => Promise<void>;
+}
+interface IAuthProps {
+  children: ReactNode;
+}
+export interface IUserProps {
+  name: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  bio: string;
+  contact: string;
+  course_module: string[];
+  techs?: string[];
+}
+export interface ILoginData {
+  email: string;
+  password: string;
+}
 
-const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+export const AuthContext = createContext({} as IAuthProviderProps);
+
+const AuthProvider = ({ children }: IAuthProps) => {
+  const [user, setUser] = useState<IUserProps>({} as IUserProps);
+  const [loading, setLoading] = useState<boolean>(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -15,7 +38,7 @@ const AuthProvider = ({ children }) => {
       const token = localStorage.getItem("@TOKEN");
       if (token) {
         try {
-          api.defaults.headers.authorization = `Bearer ${token}`;
+          api.defaults.headers.common.Authorization = `Bearer ${token}`;
           const { data } = await api.get("/profile");
           setUser(data);
         } catch (error) {
@@ -29,7 +52,7 @@ const AuthProvider = ({ children }) => {
     loadUser();
   }, []);
 
-  const signIn = async (data) => {
+  const signIn = async (data: ILoginData) => {
     try {
       const response = await api.post("/sessions", data);
       toast.success("Login Efetuado!");
@@ -37,7 +60,7 @@ const AuthProvider = ({ children }) => {
       const { user: userResponse, token } = response.data;
 
       setUser(userResponse);
-      localStorage.setItem("@USERID", userResponse.id);
+      localStorage.setItem("@USERID", JSON.stringify(userResponse.id));
       localStorage.setItem("@TOKEN", token);
 
       navigate("/dashboard", { replace: true });

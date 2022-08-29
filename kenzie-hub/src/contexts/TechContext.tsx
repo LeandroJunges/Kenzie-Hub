@@ -1,12 +1,32 @@
+import { ReactNode } from "react";
 import { createContext, useState } from "react";
 import { toast } from "react-toastify";
 import api from "../Service/api";
 
-export const TechContex = createContext();
+interface ITechProviderProps {
+  techs: ITechsData[];
+  isOpenModal: boolean;
+  showTechs: (id: string) => Promise<void>;
+  removeTech: (id: string) => Promise<void>;
+  addTech: (data: ITechsData) => Promise<void>;
+  openModal: () => void;
+  closeModal: () => void;
+}
 
-const TechProvider = ({ children }) => {
-  const [techs, setTechs] = useState([]);
-  const [isOpenModal, setIsOpenModal] = useState(false);
+interface ITechsProps {
+  children: ReactNode;
+}
+export interface ITechsData {
+  title: string;
+  status: string;
+  id: string;
+}
+
+export const TechContex = createContext({} as ITechProviderProps);
+
+const TechProvider = ({ children }: ITechsProps) => {
+  const [techs, setTechs] = useState<ITechsData[]>([]);
+  const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
 
   const openModal = () => {
     setIsOpenModal(true);
@@ -14,9 +34,9 @@ const TechProvider = ({ children }) => {
   const closeModal = () => {
     setIsOpenModal(false);
   };
-  function showTechs(id) {
+  const showTechs = async (id: string) => {
     const token = localStorage.getItem("@TOKEN");
-    api
+    await api
       .get(`/users/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -26,9 +46,10 @@ const TechProvider = ({ children }) => {
         setTechs(response.data.techs);
       })
       .catch((err) => console.error(err));
-  }
+  };
 
-  const removeTech = async (id) => {
+  const removeTech = async (id: string) => {
+    const person = JSON.parse(localStorage.getItem("@USERID") || "{}");
     const token = localStorage.getItem("@TOKEN");
     if (token) {
       try {
@@ -40,14 +61,13 @@ const TechProvider = ({ children }) => {
 
         toast.success("Tecnologia Deletada!");
 
-        const person = localStorage.getItem("@USERID");
         showTechs(person);
       } catch (error) {
         console.error("Ops aconteceu esse problema", error);
       }
     }
   };
-  const addTech = async (data) => {
+  const addTech = async (data: ITechsData) => {
     const token = localStorage.getItem("@TOKEN");
     try {
       await api.post("/users/techs", data, {
@@ -58,7 +78,7 @@ const TechProvider = ({ children }) => {
 
       toast.success("Tecnologia adicionada!");
 
-      const person = localStorage.getItem("@USERID");
+      const person = JSON.parse(localStorage.getItem("@USERID") || "{}");
       showTechs(person);
       setIsOpenModal(false);
     } catch (error) {
